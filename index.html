@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS3 Transitions and Animations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .animated-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        .animated-button:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+        }
+
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .theme-toggle {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background-color: #008CBA;
+            color: white;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: #006d93;
+        }
+
+        .dark-theme {
+            background-color: #333;
+            color: white;
+        }
+
+        .image-container {
+            margin: 20px;
+        }
+
+        .animated-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.5s ease;
+        }
+
+        .spin {
+            animation: spin 2s linear;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS3 Transitions & Animations</h1>
+        <button class="animated-button" onclick="triggerPulse()">Pulse Button</button>
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+        <div class="image-container">
+            <img src="img1.jpg" alt="Sample Image" class="animated-image" onclick="triggerSpin()">
+        </div>
+    </div>
+
+    <script>
+        // Function to trigger pulse animation on button
+        function triggerPulse() {
+            const button = document.querySelector('.animated-button');
+            button.classList.add('pulse');
+            setTimeout(() => {
+                button.classList.remove('pulse');
+            }, 1000); // Remove after animation duration
+        }
+
+        // Function to trigger spin animation on image
+        function triggerSpin() {
+            const image = document.querySelector('.animated-image');
+            image.classList.add('spin');
+            setTimeout(() => {
+                image.classList.remove('spin');
+            }, 2000); // Remove after animation duration
+        }
+
+        // Function to toggle theme and save preference
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark-theme');
+            
+            // Save theme preference to localStorage
+            const isDarkTheme = body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+        }
+
+        // Function to load theme from localStorage
+        function loadTheme() {
+            const theme = localStorage.getItem('theme');
+            if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+        }
+
+        // Load theme on page load
+        window.onload = loadTheme;
+    </script>
+</body>
+</html>
